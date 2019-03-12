@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const multer = require("multer");
 const adminImgController = require("../../controllers/adminImgController");
 const userController = require("../../controllers/userController");
+const professionalController = require("../../controllers/professionalController");
 
 const uuidV4 = require("uuid/v4");
 const cors = require("cors");
@@ -22,17 +23,30 @@ const storage = multer.diskStorage({
 const imageUpload = multer({ storage: storage });
 // console.log('+*******',imageUpload);
 
-router.get("/", cors(),(req, res) => {
+router.get("/", cors(), (req, res) => {
   res.send({
     init: "start"
   });
 });
 
-router.get("/api",cors(), (req, res) => {
+router.get("/api", cors(), (req, res) => {
   res.send({
     api: "edomus App - decoration app",
     authors: "Ansumana, Gaia and Sergio"
   });
 });
+
+//testing routes
+router.post(
+  "/api/professionals/save",
+  imageUpload.single("image"),
+  professionalController.saveNewProfessional
+);
+
+router.post(
+  "/api/user/save",
+  imageUpload.single("avatar"),
+  userController.saveNewUser
+);
 
 module.exports = router;

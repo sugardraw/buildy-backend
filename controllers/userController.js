@@ -9,7 +9,6 @@ const saltRounds = 10;
 const userController = {};
 
 userController.saveNewUser = (req, res) => {
-
   if (req.body.email !== "" || req.body.email !== undefined) {
     User.find({ email: req.body.email }, (err, registeredUsers) => {
       if (err) {
@@ -37,7 +36,7 @@ userController.saveNewUser = (req, res) => {
                 console.log(error);
                 res.send(error);
               } else {
-                console.log("Cocktail was created successfully");
+                console.log("User was created successfully");
                 return res.send({
                   success: true,
                   msg: "Registration successful :)!"
@@ -57,7 +56,6 @@ userController.saveNewUser = (req, res) => {
 
 userController.validateUser = (req, res) => {
   console.log("#####", req.body.params.token, req.body.data);
-
 
   if (req.body.data.email !== "" || req.body.data.email !== undefined) {
     User.find({ email: req.body.data.email }, (err, registeredUsers) => {
@@ -109,7 +107,7 @@ userController.validateUser = (req, res) => {
 };
 
 userController.checkToken = (req, res) => {
-  console.log('******',req.body.token, req.body);
+  console.log("******", req.body.token, req.body);
   Session.find({ token: req.body.token }).exec((errors, session) => {
     if (errors) {
       console.log("error:", error);

@@ -16,10 +16,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  avatar: {
-    type: String,
-    unique: true
-  },
+  avatar: {},
   images: [{ name: String, tags: String, description: String }],
 
   date: {
