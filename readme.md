@@ -1,4 +1,4 @@
 ### Buildy-Backend
-##### Backend for an interior reform Native App
+##### Backend for the interior reform App: Buildy
 
 Team: Ansumana, Gaia and Sergio
