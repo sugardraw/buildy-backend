@@ -9,11 +9,9 @@ estimationController.saveNewEstimation = (req, res) => {
   if (req.body !== null || req.body !== undefined) {
     User.findOne(
       {
-        _id: "5c890bfb34029d14f3634ba9"
+        _id: "5c89412b1ed3611c98fbb000"
       },
       function(err, user) {
-        console.log("-----", user);
-
         const estimationRequest = new EstimationRequest({
           user: user._id,
           ...req.body

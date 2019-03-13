@@ -40,7 +40,7 @@ const professionalSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  images: [{}],
+  projectImages: [{}],
 
   date: {
     type: Date,

@@ -8,6 +8,12 @@ const saltRounds = 10;
 
 const professionalController = {};
 
+professionalController.listAll = (req, res) => {
+  Professional.find({}, (err, professionalList) => {
+    res.send(professionalList);
+  });
+};
+
 professionalController.saveNewProfessional = (req, res) => {
   console.log(req.body);
 
@@ -42,7 +48,7 @@ professionalController.saveNewProfessional = (req, res) => {
                   console.log("Professional was saved successfully");
                   return res.send({
                     success: true,
-                    msg: "Registration successful :)!"
+                    msg: "Professional registration successful :)!"
                   });
                 }
               });

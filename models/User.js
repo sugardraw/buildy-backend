@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   avatar: {},
-  images: [{ name: String, tags: String, description: String }],
   estimations: [{ type: Schema.Types.ObjectId, ref: "EstimationRequest" }],
   date: {
     type: Date,

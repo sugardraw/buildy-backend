@@ -8,6 +8,12 @@ const saltRounds = 10;
 
 const userController = {};
 
+userController.listAll = (req, res) => {
+  User.find({}, (err, userList) => {
+    res.send(userList);
+  });
+};
+
 userController.saveNewUser = (req, res) => {
   if (req.body.email !== "" || req.body.email !== undefined) {
     User.find({ email: req.body.email }, (err, registeredUsers) => {
@@ -29,7 +35,6 @@ userController.saveNewUser = (req, res) => {
           .then(hash => {
             console.log(`Hash: ${hash}`);
             req.body.password = hash;
-
             const user = new User(req.body);
             user._id = new mongoose.Types.ObjectId();
 
@@ -42,7 +47,7 @@ userController.saveNewUser = (req, res) => {
 
                 return res.send({
                   success: true,
-                  msg: "Registration successful :)!"
+                  msg: "User registration was successful :)!"
                 });
               }
             });

@@ -46,8 +46,11 @@ router.get("/api", cors(), (req, res) => {
  *  */
 
 router.post(
-  "/api/professionals/save",
-  imageUpload.single("image"),
+  "/api/professional/save",
+  imageUpload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "projectImages", maxCount: 8 }
+  ]),
   professionalController.saveNewProfessional
 );
 
@@ -58,9 +61,14 @@ router.post(
 );
 
 router.post(
-  "/api/user/request-estimation/send",
-  imageUpload.single("avatar"),
+  "/api/user/estimation/send",
+  imageUpload.array("editedImages", 8),
   estimationController.saveNewEstimation
 );
+
+//get all
+
+router.get("/api/user/listAll", userController.listAll);
+router.get("/api/professional/listAll", professionalController.listAll);
 
 module.exports = router;
