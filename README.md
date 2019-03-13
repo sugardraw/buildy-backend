@@ -10,4 +10,6 @@ Team: Ansumana, Gaia and Sergio
   4. list all Profesionals(GET): ` http://localhost:3001/api/professional/listAll `
   5. list all Users(GET): ` http://localhost:3001/api/user/listAll `
   
+  
+  hint: to connect  mLab you need the user and the password. Ask me i in slack.
   hint: At the reqBodyExamples JSON-file you can find some data to test
