@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const User = require("../models/User");
 const Session = require("../models/Session");
-
+const EstimationRequest = require("../models/EstimationRequest");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -29,7 +29,9 @@ userController.saveNewUser = (req, res) => {
           .then(hash => {
             console.log(`Hash: ${hash}`);
             req.body.password = hash;
+
             const user = new User(req.body);
+            user._id = new mongoose.Types.ObjectId();
 
             user.save(error => {
               if (error) {
@@ -37,6 +39,7 @@ userController.saveNewUser = (req, res) => {
                 res.send(error);
               } else {
                 console.log("User was created successfully");
+
                 return res.send({
                   success: true,
                   msg: "Registration successful :)!"

@@ -2,9 +2,10 @@ const router = require("express").Router();
 const path = require("path");
 const crypto = require("crypto");
 const multer = require("multer");
-const adminImgController = require("../../controllers/adminImgController");
+
 const userController = require("../../controllers/userController");
 const professionalController = require("../../controllers/professionalController");
+const estimationController = require("../../controllers/estimationController");
 
 const uuidV4 = require("uuid/v4");
 const cors = require("cors");
@@ -36,7 +37,14 @@ router.get("/api", cors(), (req, res) => {
   });
 });
 
-//testing routes
+/**
+ *
+ * testing routes
+ * testing routes
+ * testing routes
+ *
+ *  */
+
 router.post(
   "/api/professionals/save",
   imageUpload.single("image"),
@@ -47,6 +55,12 @@ router.post(
   "/api/user/save",
   imageUpload.single("avatar"),
   userController.saveNewUser
+);
+
+router.post(
+  "/api/user/request-estimation/send",
+  imageUpload.single("avatar"),
+  estimationController.saveNewEstimation
 );
 
 module.exports = router;

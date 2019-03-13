@@ -1,7 +1,14 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
-  name: {
+  _id: Schema.Types.ObjectId,
+  first_name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  last_name: {
     type: String,
     required: true,
     unique: true
@@ -18,7 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {},
   images: [{ name: String, tags: String, description: String }],
-
+  estimations: [{ type: Schema.Types.ObjectId, ref: "EstimationRequest" }],
   date: {
     type: Date,
     default: Date.now
