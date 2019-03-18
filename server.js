@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 //set an static route to show the images
 
-app.use("/images", express.static(__dirname + "/uploads/images"));
+app.use("/uploads/images", express.static(__dirname + "/uploads/images"));
 mongoose
   .connect(MONGO_URI.parsed.MONGO_URI, { useNewUrlParser: true })
   .then(console.log("Successful connection to database"))
