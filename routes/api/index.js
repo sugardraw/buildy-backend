@@ -71,4 +71,11 @@ router.post(
 router.get("/api/user/listAll", userController.listAll);
 router.get("/api/professional/listAll", professionalController.listAll);
 
+//validate users login
+router.post("/api/user/login", userController.validateUser);
+router.post(
+  "/api/professional/login",
+  professionalController.validateProfessional
+);
+
 module.exports = router;
