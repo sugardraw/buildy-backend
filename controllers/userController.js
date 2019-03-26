@@ -78,7 +78,7 @@ userController.validateUser = (req, res) => {
               return err;
             } else {
               const sessionObj = {
-                token: req.body.params.token,
+                token: req.body.params.token || "token",
                 userId: registeredUsers[0]._id
               };
 
