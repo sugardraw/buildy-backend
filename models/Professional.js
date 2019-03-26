@@ -25,9 +25,6 @@ const professionalSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    number: {
-      type: Number
-    },
     zip: {
       type: String,
       required: true

@@ -114,6 +114,11 @@ userController.validateUser = (req, res) => {
   }
 };
 
+userController.saveAvatar = (req, res) => {
+  console.log(req.body);
+  res.send("testing upload avatar");
+};
+
 userController.checkToken = (req, res) => {
   console.log("******", req.body.token, req.body);
   Session.find({ token: req.body.token }).exec((errors, session) => {
