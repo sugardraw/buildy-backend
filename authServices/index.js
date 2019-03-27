@@ -68,7 +68,7 @@ function loginValidation(req, res) {
                     return res.send({
                       success: true,
                       isLogged: true,
-                      msg2: "you are successfully logged",
+                      msg: "you are successfully logged",
                       type: "user"
                     });
                   }
@@ -105,7 +105,7 @@ function loginValidation(req, res) {
                             return res.send({
                               success: true,
                               isLogged: true,
-                              msg2: "you are successfully logged",
+                              msg: "you are successfully logged",
                               type: "professional"
                             });
                           }
