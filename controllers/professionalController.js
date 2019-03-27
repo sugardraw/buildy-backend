@@ -6,6 +6,27 @@ const Session = require("../models/Session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const jwt = require("jwt-simple");
+const moment = require("moment");
+const config = require("../config");
+
+// we create a token with JWT
+
+function createToken(professional) {
+  if (!professional && !professional._id) {
+    return null;
+  }
+  let payload = {
+    sub: professional._id,
+    iat: moment().unix(),
+    exp: moment()
+      .add(14, "days")
+      .unix()
+  };
+
+  return jwt.encode(payload, config.SECRET_TOKEN);
+}
+
 const professionalController = {};
 
 professionalController.listAll = (req, res) => {
@@ -48,7 +69,8 @@ professionalController.saveNewProfessional = (req, res) => {
                   console.log("Professional was saved successfully");
                   return res.send({
                     success: true,
-                    msg: "Professional registration successful :)!"
+                    msg: "Professional registration successful :)!",
+                    token: createToken(professional)
                   });
                 }
               });
@@ -62,72 +84,6 @@ professionalController.saveNewProfessional = (req, res) => {
       "Registration failed. Make sure You fulfilled correctly all fields"
     );
   }
-};
-
-professionalController.validateProfessional = (req, res) => {
-  console.log("#####", req.body.params.token, req.body.data);
-
-  if (req.body.data.email !== "" || req.body.data.email !== undefined) {
-    Professional.find(
-      { email: req.body.data.email },
-      (err, registeredProfessionals) => {
-        if (err) {
-          return res.send("Registration failed. Server error");
-        } else if (registeredProfessionals.length > 0) {
-          bcrypt.compare(
-            req.body.data.password,
-            registeredProfessionals[0].password,
-            (err, response) => {
-              if (err) {
-                return err;
-              } else {
-                const sessionObj = {
-                  token: req.body.params.token,
-                  ProfessionalId: registeredProfessionals[0]._id
-                };
-
-                const session = new Session(sessionObj);
-                session.save(error => {
-                  if (error) {
-                    console.log(error);
-                    res.send(error);
-                  } else {
-                    console.log("token saved");
-                    return res.send({
-                      success: true,
-                      isLogged: true,
-                      msg1: "Token created and saved :)!",
-                      msg2: "you are successfully logged"
-                    });
-                  }
-                });
-              }
-            }
-          );
-        } else {
-          return res.send({
-            isRegistered: false,
-            msg: "you are not registered"
-          });
-        }
-      }
-    );
-  } else {
-    res.send(
-      "Registration failed. Make sure You fulfilled correctly all fields"
-    );
-  }
-};
-
-professionalController.checkToken = (req, res) => {
-  console.log("******", req.body.token, req.body);
-  Session.find({ token: req.body.token }).exec((errors, session) => {
-    if (errors) {
-      console.log("error:", error);
-    } else {
-      res.send(session);
-    }
-  });
 };
 
 module.exports = professionalController;

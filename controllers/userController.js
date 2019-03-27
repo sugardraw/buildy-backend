@@ -6,6 +6,27 @@ const EstimationRequest = require("../models/EstimationRequest");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const jwt = require("jwt-simple");
+const moment = require("moment");
+const config = require("../config");
+
+// we create a token with JWT
+
+function createToken(user) {
+  if (!user && !user._id) {
+    return null;
+  }
+  let payload = {
+    sub: user._id,
+    iat: moment().unix(),
+    exp: moment()
+      .add(14, "days")
+      .unix()
+  };
+
+  return jwt.encode(payload, config.SECRET_TOKEN);
+}
+
 const userController = {};
 
 userController.listAll = (req, res) => {
@@ -29,7 +50,6 @@ userController.saveNewUser = (req, res) => {
           .genSalt(saltRounds)
           .then(salt => {
             console.log(`Salt: ${salt}`);
-
             return bcrypt.hash(req.body.password, salt);
           })
           .then(hash => {
@@ -40,14 +60,15 @@ userController.saveNewUser = (req, res) => {
 
             user.save(error => {
               if (error) {
-                console.log(error);
-                res.send(error);
+                res
+                  .status(500)
+                  .send({ message: `Error creating user: ${error}` });
               } else {
                 console.log("User was created successfully");
-
-                return res.send({
+                return res.status(200).send({
                   success: true,
-                  msg: "User registration was successful :)!"
+                  msg: "User registration was successful :)!",
+                  token: createToken(user)
                 });
               }
             });
@@ -62,72 +83,9 @@ userController.saveNewUser = (req, res) => {
   }
 };
 
-userController.validateUser = (req, res) => {
-  console.log("#####", req.body.params.token, req.body.data);
-
-  if (req.body.data.email !== "" || req.body.data.email !== undefined) {
-    User.find({ email: req.body.data.email }, (err, registeredUsers) => {
-      if (err) {
-        return res.send("Registration failed. Server error");
-      } else if (registeredUsers.length > 0) {
-        bcrypt.compare(
-          req.body.data.password,
-          registeredUsers[0].password,
-          (err, response) => {
-            if (err) {
-              return err;
-            } else {
-              const sessionObj = {
-                token: req.body.params.token || "token",
-                userId: registeredUsers[0]._id
-              };
-
-              const session = new Session(sessionObj);
-              session.save(error => {
-                if (error) {
-                  console.log(error);
-                  res.send(error);
-                } else {
-                  console.log("token saved");
-                  return res.send({
-                    success: true,
-                    isLogged: true,
-                    msg1: "Token created and saved :)!",
-                    msg2: "you are successfully logged"
-                  });
-                }
-              });
-            }
-          }
-        );
-      } else {
-        return res.send({
-          isRegistered: false,
-          msg: "you are not registered"
-        });
-      }
-    });
-  } else {
-    res.send(
-      "Registration failed. Make sure You fulfilled correctly all fields"
-    );
-  }
-};
-
 userController.saveAvatar = (req, res) => {
   console.log(req.body);
   res.send("testing upload avatar");
-};
-
-userController.checkToken = (req, res) => {
-  console.log("******", req.body.token, req.body);
-  Session.find({ token: req.body.token }).exec((errors, session) => {
-    if (errors) {
-      console.log("error:", error);
-    } else {
-      res.send(session);
-    }
-  });
 };
 
 module.exports = userController;

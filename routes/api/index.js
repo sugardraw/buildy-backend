@@ -7,6 +7,8 @@ const userController = require("../../controllers/userController");
 const professionalController = require("../../controllers/professionalController");
 const estimationController = require("../../controllers/estimationController");
 
+const { loginValidation } = require("../../authServices/index");
+
 const uuidV4 = require("uuid/v4");
 const cors = require("cors");
 
@@ -71,15 +73,11 @@ router.post(
 router.get("/api/user/listAll", userController.listAll);
 router.get("/api/professional/listAll", professionalController.listAll);
 
-//validate users login (we have to use one login for both)
-router.post("/api/user/login", userController.validateUser);
-router.post(
-  "/api/professional/login",
-  professionalController.validateProfessional
-);
-
 //upload an avatar image
 // router.get("/api/user/save_avatar", userController.saveAvatar);
 router.post("/api/user/save_avatar", userController.saveAvatar);
+
+//validate users || professionals login (we have to use one login for both)
+router.post("/api/login", loginValidation);
 
 module.exports = router;
