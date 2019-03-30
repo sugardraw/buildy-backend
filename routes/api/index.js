@@ -34,8 +34,8 @@ router.get("/", cors(), (req, res) => {
 
 router.get("/api", cors(), (req, res) => {
   res.send({
-    api: "edomus App - decoration app",
-    authors: "Ansumana, Gaia and Sergio"
+    api: "Buildy App - decoration app",
+    authors: "Ansumana Baboe, Gaia Cicaloni and Sergio Usle"
   });
 });
 
