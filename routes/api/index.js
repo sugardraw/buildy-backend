@@ -63,7 +63,7 @@ router.post(
 );
 
 router.post(
-  "/api/user/estimation/send",
+  "/api/user/request/save",
   imageUpload.array("editedImages", 8),
   estimationController.saveNewEstimation
 );

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const User = require("../models/User");
 const Session = require("../models/Session");
-const EstimationRequest = require("../models/EstimationRequest");
+const Estimation = require("../models/Estimation");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -64,6 +64,14 @@ userController.saveNewUser = (req, res) => {
                   .status(500)
                   .send({ message: `Error creating user: ${error}` });
               } else {
+                const estimation = new Estimation({
+                  user: user._id,
+                  requestData: {},
+                  editedImages: [{}]
+                });
+                estimation.save(function(err) {
+                  if (err) return handleError(err);
+                });
                 console.log("User was created successfully");
                 return res.status(200).send({
                   success: true,

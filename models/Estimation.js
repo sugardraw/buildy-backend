@@ -3,6 +3,12 @@ const Schema = mongoose.Schema;
 
 const estimationRequestSchema = Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
+  requestData: {
+    title: String,
+    description: String,
+    budget: String,
+    date: String
+  },
   editedImages: [{}],
   date: {
     type: Date,
@@ -11,6 +17,6 @@ const estimationRequestSchema = Schema({
 });
 
 module.exports = EstimationRequest = mongoose.model(
-  "EstimationRequest",
+  "Estimation",
   estimationRequestSchema
 );

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   avatar: {},
-  estimations: [{ type: Schema.Types.ObjectId, ref: "EstimationRequest" }],
+  estimations: [{ type: Schema.Types.ObjectId, ref: "Estimation" }],
   date: {
     type: Date,
     default: Date.now

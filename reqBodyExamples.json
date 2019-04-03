@@ -37,13 +37,21 @@
 	
 ////////////estimation request
 
+
 { 
+  "user":"5c9b833f0756b91851b783a4",
+  
+"requestData": {
+  "title": "blabla",
+  "messageText": "Bla",
+  "budget": "Bla",
+  "date": "String/str/str"
+},
+"editedImages": [{"user-project0": "/uploads/estimations/image/user1-project1.jpg"},
+  {"user-project1": "/uploads/estimations/image/user1-project2.jpg"},
+  {"user-project2":"/uploads/estimations/image/user1-project3.jpg"}]
 
-"editedImages": [
-    {"user-project0": "/uploads/image/user1-project1.jpg"},
-    {"user-project1": "/uploads/image/user1-project2.jpg"},
-    {"user-project2":"/uploads/image/user1-project3.jpg"}
-
-]
 }
+
+
 	

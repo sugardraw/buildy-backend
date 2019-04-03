@@ -5,7 +5,7 @@ const config = require("../config");
 
 const Professional = require("../models/Professional");
 const User = require("../models/User");
-const EstimationRequest = require("../models/EstimationRequest");
+const EstimationRequest = require("../models/Estimation");
 const Session = require("../models/Session");
 
 const bcrypt = require("bcrypt");
