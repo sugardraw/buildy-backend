@@ -73,6 +73,8 @@ router.post(
 router.get("/api/user/listAll", userController.listAll);
 router.get("/api/professional/listAll", professionalController.listAll);
 
+router.get("/api/user/request/showLast", estimationController.showLast);
+
 //upload an avatar image
 // router.get("/api/user/save_avatar", userController.saveAvatar);
 router.post("/api/user/save_avatar", userController.saveAvatar);
