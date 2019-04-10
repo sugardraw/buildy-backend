@@ -76,7 +76,7 @@ router.get("/api/professional/listAll", professionalController.listAll);
 router.get("/api/user/request/showLast", estimationController.showLast);
 
 //upload an avatar image
-// router.get("/api/user/save_avatar", userController.saveAvatar);
+router.get("/api/professional/save_avatar", professionalController.saveAvatar);
 router.post("/api/user/save_avatar", userController.saveAvatar);
 
 //validate users || professionals login (we have to use one login for both)

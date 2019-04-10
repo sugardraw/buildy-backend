@@ -23,6 +23,18 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  city: {
+    type: String,
+    required: true
+  },
+  street: {
+    type: String,
+    required: true
+  },
+  zip: {
+    type: String,
+    required: true
+  },
   avatar: {},
   estimations: [{ type: Schema.Types.ObjectId, ref: "Estimation" }],
   date: {

@@ -86,4 +86,11 @@ professionalController.saveNewProfessional = (req, res) => {
   }
 };
 
+
+professionalController.saveAvatar = (req, res) => {
+  console.log(req.body);
+  res.send("testing upload avatar");
+};
+
+
 module.exports = professionalController;

@@ -6,6 +6,10 @@ const SessionSchema = new mongoose.Schema({
   },
   userId: {
     type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 

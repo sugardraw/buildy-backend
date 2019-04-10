@@ -36,6 +36,8 @@ userController.listAll = (req, res) => {
 };
 
 userController.saveNewUser = (req, res) => {
+  console.log(req.body);
+
   if (req.body.email !== "" || req.body.email !== undefined) {
     User.find({ email: req.body.email }, (err, registeredUsers) => {
       if (err) {
@@ -77,6 +79,35 @@ userController.saveNewUser = (req, res) => {
                   success: true,
                   msg: "User registration was successful :)!",
                   token: createToken(user)
+                });
+              }
+            });
+
+            const sessionObj = {
+              /**
+               * here you can pass the
+               * token also
+               *
+               *    token: req.body.params.token,
+               */
+
+              token: req.body.params.token || registeredUsers[0]._id,
+
+              userId: registeredUsers[0]._id
+            };
+
+            const session = new Session(sessionObj);
+            session.save(error => {
+              if (error) {
+                console.log(error);
+                res.send(error);
+              } else {
+                console.log("token saved");
+                return res.send({
+                  success: true,
+                  isLogged: true,
+                  // msg1: "Token created and saved :)!",
+                  msg2: "you are successfully logged"
                 });
               }
             });
