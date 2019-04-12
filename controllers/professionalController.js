@@ -34,10 +34,18 @@ professionalController.listAll = (req, res) => {
     res.send(professionalList);
   });
 };
+professionalController.showDetails = (req, res) => {
+  console.log(req.query.id);
+  Professional.find({ _id: req.query.id }, (err, professional) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(professional);
+    }
+  });
+};
 
 professionalController.saveNewProfessional = (req, res) => {
-  console.log(req.body);
-
   if (req.body.email !== "" || req.body.email !== undefined) {
     Professional.find(
       { email: req.body.email },
@@ -86,11 +94,9 @@ professionalController.saveNewProfessional = (req, res) => {
   }
 };
 
-
 professionalController.saveAvatar = (req, res) => {
   console.log(req.body);
   res.send("testing upload avatar");
 };
-
 
 module.exports = professionalController;

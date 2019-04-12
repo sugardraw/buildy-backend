@@ -65,13 +65,14 @@ router.post(
 router.post(
   "/api/user/request/save",
   imageUpload.array("editedImages", 8),
-  estimationController.saveNewEstimation
+  estimationController.saveNewEstimation  
 );
 
 //get all
 
 router.get("/api/user/listAll", userController.listAll);
 router.get("/api/professional/listAll", professionalController.listAll);
+router.get("/api/professional/showDetails", professionalController.showDetails);
 
 router.get("/api/user/request/showLast", estimationController.showLast);
 

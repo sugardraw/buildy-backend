@@ -20,6 +20,12 @@ const professionalSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  shortDescription:{
+    type: String
+  },
+  longDescription:{
+    type: String
+  },
   address: {
     street: {
       type: String,
