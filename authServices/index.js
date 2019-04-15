@@ -14,6 +14,18 @@ function verifyToken(token) {
   return jwt.verify(token, config.SECRET_TOKEN);
 }
 
+function createToken() {
+  let payload = {
+    sub: user._id,
+    iat: moment().unix(),
+    exp: moment()
+      .add(14, "days")
+      .unix()
+  };
+
+  return jwt.encode(payload, config.SECRET_TOKEN);
+}
+
 // userController.checkToken = (req, res) => {
 //   console.log(req.headers);
 //   const token = req.headers.authorization;
@@ -54,25 +66,34 @@ function loginValidation(req, res) {
               if (err) {
                 return err;
               } else {
-                const sessionObj = {
-                  userId: registeredUsers[0]._id
-                };
+                Session.find({ userId: registeredUsers[0]._id }).exec(
+                  (errors, session) => {
+                    if (errors) {
+                      console.log("error:", error);
+                    } else {
+     
+                      const sessionObj = {
+                        userId: registeredUsers[0]._id,
+                        token: session[0].token
+                      };
+                     
 
-                const session = new Session(sessionObj);
-                session.save(error => {
-                  if (error) {
-                    console.log(error);
-                    res.send(error);
-                  } else {
-                    console.log("token saved");
-                    return res.send({
-                      success: true,
-                      isLogged: true,
-                      msg: "you are successfully logged",
-                      type: "user"
-                    });
+                      const newSession = new Session(sessionObj);
+                      newSession.save(error => {
+                        if (error) {
+                          console.log(error);
+                          res.send(error);
+                        } else {
+                          return res.status(200).send({
+                            success: true,
+                            msg: "User registration was successful :)!",
+                            token: sessionObj.token
+                          });
+                        }
+                      });
+                    }
                   }
-                });
+                );
               }
             }
           );
@@ -104,7 +125,7 @@ function loginValidation(req, res) {
                             console.log("token saved");
                             return res.send({
                               success: true,
-                              isLogged: true,
+                              token: createToken(user),
                               msg: "you are successfully logged",
                               type: "professional"
                             });

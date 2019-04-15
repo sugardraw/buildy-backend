@@ -34,6 +34,8 @@ professionalController.listAll = (req, res) => {
     res.send(professionalList);
   });
 };
+
+
 professionalController.showDetails = (req, res) => {
   console.log(req.query.id);
   Professional.find({ _id: req.query.id }, (err, professional) => {

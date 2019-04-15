@@ -58,6 +58,7 @@ userController.saveNewUser = (req, res) => {
             console.log(`Hash: ${hash}`);
             req.body.password = hash;
             const user = new User(req.body);
+            let token = createToken(user);
             user._id = new mongoose.Types.ObjectId();
 
             user.save(error => {
@@ -74,40 +75,27 @@ userController.saveNewUser = (req, res) => {
                 estimation.save(function(err) {
                   if (err) return handleError(err);
                 });
+
+                const sessionObj = {
+                  token: token,
+                  userId: user._id
+                };
+
+                const session = new Session(sessionObj);
+                session.save(error => {
+                  if (error) {
+                    console.log(error);
+                    res.send(error);
+                  } else {
+                    console.log("token saved");
+                    return null;
+                  }
+                });
                 console.log("User was created successfully");
                 return res.status(200).send({
                   success: true,
                   msg: "User registration was successful :)!",
-                  token: createToken(user)
-                });
-              }
-            });
-
-            const sessionObj = {
-              /**
-               * here you can pass the
-               * token also
-               *
-               *    token: req.body.params.token,
-               */
-
-              token: req.body.params.token || registeredUsers[0]._id,
-
-              userId: registeredUsers[0]._id
-            };
-
-            const session = new Session(sessionObj);
-            session.save(error => {
-              if (error) {
-                console.log(error);
-                res.send(error);
-              } else {
-                console.log("token saved");
-                return res.send({
-                  success: true,
-                  isLogged: true,
-                  // msg1: "Token created and saved :)!",
-                  msg2: "you are successfully logged"
+                  token: token
                 });
               }
             });
