@@ -77,6 +77,7 @@ function loginValidation(req, res) {
                         token: session[0].token
                       };
                       const newSession = new Session(sessionObj);
+                      console.log(registeredUsers[0].avatar)
                       newSession.save(error => {
                         if (error) {
                           console.log(error);
@@ -85,7 +86,8 @@ function loginValidation(req, res) {
                           return res.status(200).send({
                             success: true,
                             msg: "User registration was successful :)!",
-                            token: sessionObj.token
+                            token: sessionObj.token,
+                            avatar: registeredUsers[0].avatar
                           });
                         }
                       });

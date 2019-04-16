@@ -112,8 +112,6 @@ userController.saveNewUser = (req, res) => {
 
 userController.saveAvatar = (req, res) => {
   console.log("userController.saveAvatar", req.body, req.body._parts);
-
-  
   return res.send({
     status: true
   });
