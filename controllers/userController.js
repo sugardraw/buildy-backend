@@ -111,8 +111,12 @@ userController.saveNewUser = (req, res) => {
 };
 
 userController.saveAvatar = (req, res) => {
-  console.log(req.body);
-  res.send("testing upload avatar");
+  console.log("userController.saveAvatar", req.body, req.body._parts);
+
+  
+  return res.send({
+    status: true
+  });
 };
 
 module.exports = userController;

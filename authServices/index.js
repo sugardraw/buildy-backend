@@ -70,14 +70,12 @@ function loginValidation(req, res) {
                   (errors, session) => {
                     if (errors) {
                       console.log("error:", error);
+                    } else if (!session) {
                     } else {
-     
                       const sessionObj = {
                         userId: registeredUsers[0]._id,
                         token: session[0].token
                       };
-                     
-
                       const newSession = new Session(sessionObj);
                       newSession.save(error => {
                         if (error) {
@@ -143,6 +141,7 @@ function loginValidation(req, res) {
               }
             );
           } catch (error) {
+            console.log(error);
             return null;
           }
         }

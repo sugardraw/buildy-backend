@@ -35,7 +35,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  avatar: {},
+  avatar: {
+    type: String
+  },
 
   estimations: [{ type: Schema.Types.ObjectId, ref: "Estimation" }],
   date: {
