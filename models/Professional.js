@@ -20,30 +20,27 @@ const professionalSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  shortDescription:{
+  shortDescription: {
     type: String
   },
-  longDescription:{
+  longDescription: {
     type: String
   },
-  address: {
-    street: {
-      type: String,
-      required: true
-    },
-    zip: {
-      type: String,
-      required: true
-    },
-    city: {
-      type: String
-    }
-  },
-  avatar: {
+
+  street: {
     type: String,
-    unique: true
+    required: true
   },
-  projectImages: [{}],
+  zip: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String
+  },
+
+  avatar: {},
+  projectImages: [],
 
   date: {
     type: Date,

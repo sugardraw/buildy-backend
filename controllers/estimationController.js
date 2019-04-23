@@ -7,6 +7,8 @@ const Estimation = require("../models/Estimation");
 const estimationController = {};
 
 estimationController.saveNewEstimation = (req, res) => {
+  console.log(req.body._parts);
+
   if (req.body !== null || req.body !== undefined) {
     Estimation.findOne({
       user: req.body._parts[0][1].user,
@@ -67,13 +69,16 @@ estimationController.saveNewEstimation = (req, res) => {
 };
 
 estimationController.showLast = (req, res) => {
-  console.log('#########',req.query.id, req.query.title);
-  Estimation.findOne({ user: req.query.id,  "requestData.title": req.query.title }).exec((err, lastEstimation) => {
+  console.log("#########", req.query.id, req.query.title);
+  Estimation.findOne({
+    user: req.query.id,
+    "requestData.title": req.query.title
+  }).exec((err, lastEstimation) => {
     if (err) {
       console.log(err);
       return;
     } else {
-      console.log("last estimation",lastEstimation);
+      console.log("last estimation", lastEstimation);
       res.send({
         success: true,
         msg: "last estimation",
@@ -84,3 +89,4 @@ estimationController.showLast = (req, res) => {
 };
 
 module.exports = estimationController;
+

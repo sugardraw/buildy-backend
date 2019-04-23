@@ -35,7 +35,6 @@ professionalController.listAll = (req, res) => {
   });
 };
 
-
 professionalController.showDetails = (req, res) => {
   console.log(req.query.id);
   Professional.find({ _id: req.query.id }, (err, professional) => {
@@ -48,7 +47,14 @@ professionalController.showDetails = (req, res) => {
 };
 
 professionalController.saveNewProfessional = (req, res) => {
-  if (req.body.email !== "" || req.body.email !== undefined) {
+  console.log(
+    "req body from company registration",
+    req.body,
+  );
+  if (
+    req.file !== undefined ||
+    (req.body.email !== "" || req.body.email !== undefined)
+  ) {
     Professional.find(
       { email: req.body.email },
       (err, registeredProfessionals) => {
@@ -69,6 +75,12 @@ professionalController.saveNewProfessional = (req, res) => {
             .then(hash => {
               console.log(`Hash: ${hash}`);
               req.body.password = hash;
+
+
+              
+
+
+
               const professional = new Professional(req.body);
 
               professional.save(error => {
@@ -96,8 +108,8 @@ professionalController.saveNewProfessional = (req, res) => {
   }
 };
 
-professionalController.saveAvatar = (req, res) => {
-  console.log(req.body);
+professionalController.saveImages = (req, res) => {
+  console.log("professionalController.saveImages", req.body, req.body._parts);
   res.send("testing upload avatar");
 };
 

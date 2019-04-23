@@ -13,6 +13,7 @@ const config = require("../config");
 // we create a token with JWT
 
 function createToken(user) {
+  console.log("user._id  create token", user._id);
   if (!user && !user._id) {
     return null;
   }
@@ -35,10 +36,24 @@ userController.listAll = (req, res) => {
   });
 };
 
-userController.saveNewUser = (req, res) => {
-  console.log(req.body);
+userController.showDetails = (req, res) => {
+  console.log("###", req.query.id);
+  User.find({ _id: req.query.id }, (err, user) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(user);
+    }
+  });
+};
 
-  if (req.body.email !== "" || req.body.email !== undefined) {
+userController.saveNewUser = (req, res) => {
+  console.log(req.body, req.file);
+
+  if (
+    req.body.email !== "" ||
+    req.body.email !== undefined
+  ) {
     User.find({ email: req.body.email }, (err, registeredUsers) => {
       if (err) {
         return res.send("Registration failed. Server error");
@@ -58,8 +73,8 @@ userController.saveNewUser = (req, res) => {
             console.log(`Hash: ${hash}`);
             req.body.password = hash;
             const user = new User(req.body);
-            let token = createToken(user);
             user._id = new mongoose.Types.ObjectId();
+            let token = createToken(user);
 
             user.save(error => {
               if (error) {
@@ -110,6 +125,14 @@ userController.saveNewUser = (req, res) => {
   }
 };
 
+userController.updateUser = (req, res) => {
+  console.log("req.query, req.body", req.query, req.body);
+
+  User.update({ _id: req.query.id }, { $set: req.body });
+  res.send({
+    msg: "updated"
+  });
+};
 userController.saveAvatar = (req, res) => {
   console.log("userController.saveAvatar", req.body, req.body._parts);
   return res.send({

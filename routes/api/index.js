@@ -47,14 +47,22 @@ router.get("/api", cors(), (req, res) => {
  *
  *  */
 
+// router.post(
+//   "/api/professional/save",
+//   imageUpload.fields([
+//     { name: "avatar", maxCount: 1 },
+//     { name: "projectImages", maxCount: 8 }
+//   ]),
+//   professionalController.saveNewProfessional
+// );
+
 router.post(
   "/api/professional/save",
-  imageUpload.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "projectImages", maxCount: 8 }
-  ]),
+  imageUpload.single("avatar"),
   professionalController.saveNewProfessional
 );
+
+
 
 router.post(
   "/api/user/save",
@@ -65,19 +73,30 @@ router.post(
 router.post(
   "/api/user/request/save",
   imageUpload.array("editedImages", 8),
-  estimationController.saveNewEstimation  
+  estimationController.saveNewEstimation
+);
+
+router.post(
+  "/api/user/update",
+  imageUpload.single("avatar"),
+  userController.updateUser
 );
 
 //get all
 
 router.get("/api/user/listAll", userController.listAll);
+router.get("/api/user/showDetails", userController.showDetails);
+
 router.get("/api/professional/listAll", professionalController.listAll);
 router.get("/api/professional/showDetails", professionalController.showDetails);
 
 router.get("/api/user/request/showLast", estimationController.showLast);
 
 //upload an avatar image
-router.get("/api/professional/save_avatar", professionalController.saveAvatar);
+router.post(
+  "/api/professional/api/professional/save_images",
+  professionalController.saveImages
+);
 router.post("/api/user/save_avatar", userController.saveAvatar);
 
 //validate users || professionals login (we have to use one login for both)
