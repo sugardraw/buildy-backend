@@ -13,12 +13,23 @@ const uuidV4 = require("uuid/v4");
 const cors = require("cors");
 
 const storage = multer.diskStorage({
-  destination: "./uploads/images/",
+  destination: (req, file, callback) => {
+    console.log("file", file);
+    if (file.fieldname === "avatar") {
+      let path = "./uploads/images/";
+
+      callback(null, path);
+    } else {
+      let path = "./uploads/company_projects/";
+
+      callback(null, path);
+    }
+  },
+
   filename: function(req, file, callback) {
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-      if (err) return callback(err);
-      callback(null, raw.toString("hex") + path.extname(file.originalname));
-    });
+    console.log("file__----", file, "file__mimetype------", file.mimetype);
+
+    callback(null, file.originalname + "_" + uuidV4());
   }
 });
 
@@ -47,28 +58,16 @@ router.get("/api", cors(), (req, res) => {
  *
  *  */
 
-// router.post(
-//   "/api/professional/save",
-//   imageUpload.fields([
-//     { name: "avatar", maxCount: 1 },
-//     { name: "projectImages", maxCount: 8 }
-//   ]),
-//   professionalController.saveNewProfessional
-// );
-
 router.post(
   "/api/professional/save",
-  imageUpload.single("avatar"),
+  imageUpload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "projectImages", maxCount: 8 }
+  ]),
   professionalController.saveNewProfessional
 );
 
-
-
-router.post(
-  "/api/user/save",
-  imageUpload.single("avatar"),
-  userController.saveNewUser
-);
+router.post("/api/user/save", userController.saveNewUser);
 
 router.post(
   "/api/user/request/save",

@@ -14,9 +14,9 @@ function verifyToken(token) {
   return jwt.verify(token, config.SECRET_TOKEN);
 }
 
-function createToken() {
+function createToken(person) {
   let payload = {
-    sub: user._id,
+    sub: person._id,
     iat: moment().unix(),
     exp: moment()
       .add(14, "days")
@@ -99,21 +99,25 @@ function loginValidation(req, res) {
           );
         } else {
           try {
+
+
+
+
             Professional.find(
               { email: req.body.email },
-              (err, registeredUsers) => {
+              (err, registeredProfessionals) => {
                 if (err) {
                   return res.send("Registration failed. Server error");
-                } else if (registeredUsers.length > 0) {
+                } else if (registeredProfessionals.length > 0) {
                   bcrypt.compare(
                     req.body.password,
-                    registeredUsers[0].password,
+                    registeredProfessionals[0].password,
                     (err, response) => {
                       if (err) {
                         return err;
                       } else {
                         const sessionObj = {
-                          userId: registeredUsers[0]._id
+                          profId: registeredProfessionals[0]._id
                         };
 
                         const session = new Session(sessionObj);
@@ -125,7 +129,8 @@ function loginValidation(req, res) {
                             console.log("token saved");
                             return res.send({
                               success: true,
-                              token: createToken(user),
+                              token: createToken(registeredProfessionals[0]),
+                              avatar: "/"+registeredProfessionals[0].avatar[0].path,
                               msg: "you are successfully logged",
                               type: "professional"
                             });

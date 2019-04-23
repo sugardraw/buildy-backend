@@ -7,8 +7,7 @@ const professionalSchema = new mongoose.Schema({
   },
   services: [
     {
-      type: String,
-      required: true
+      type: String
     }
   ],
   password: {
@@ -40,7 +39,7 @@ const professionalSchema = new mongoose.Schema({
   },
 
   avatar: {},
-  projectImages: [],
+  projectImages: [{}],
 
   date: {
     type: Date,
