@@ -82,15 +82,7 @@ userController.saveNewUser = (req, res) => {
                   .status(500)
                   .send({ message: `Error creating user: ${error}` });
               } else {
-                const estimation = new Estimation({
-                  user: user._id,
-                  requestData: {},
-                  editedImages: [{}]
-                });
-                estimation.save(function(err) {
-                  if (err) return handleError(err);
-                });
-
+          
                 const sessionObj = {
                   token: token,
                   userId: user._id

@@ -27,8 +27,6 @@ const storage = multer.diskStorage({
   },
 
   filename: function(req, file, callback) {
-    console.log("file__----", file, "file__mimetype------", file.mimetype);
-
     callback(null, file.originalname + "_" + uuidV4());
   }
 });
@@ -93,13 +91,11 @@ router.get("/api/user/showDetails", userController.showDetails);
 router.get("/api/professional/listAll", professionalController.listAll);
 router.get("/api/professional/showDetails", professionalController.showDetails);
 
+router.get("/api/user/request/getAll", estimationController.getAllEstimations);
 router.get("/api/user/request/showLast", estimationController.showLast);
 
 //upload an avatar image
-router.post(
-  "/api/professional/api/professional/save_images",
-  professionalController.saveImages
-);
+
 router.post("/api/user/save_avatar", userController.saveAvatar);
 
 //validate users || professionals login (we have to use one login for both)

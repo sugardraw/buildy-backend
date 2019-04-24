@@ -8,7 +8,9 @@ const estimationRequestSchema = Schema({
     description: String,
     budget: String,
     date: String
+
   },
+  sendTo:String,
   editedImages: [{}],
   date: {
     type: Date,
