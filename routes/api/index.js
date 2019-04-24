@@ -84,12 +84,17 @@ router.post(
 //get all
 
 router.get("/api/user/listAll", userController.listAll);
-router.get("/api/user/showDetails", userController.showDetails);
-
 router.get("/api/professional/listAll", professionalController.listAll);
+
+router.get("/api/user/showDetails", userController.showDetails);
+router.get("/api/user/request/showLast", estimationController.showLast);
 router.get("/api/professional/showDetails", professionalController.showDetails);
 
-router.get("/api/user/request/showLast", estimationController.showLast);
+
+
+router.get("/api/professional/search_nearest", professionalController.searchNearest)
+
+
 
 //upload an avatar image
 router.post(

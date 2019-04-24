@@ -40,6 +40,13 @@ estimationController.saveNewEstimation = (req, res) => {
         });
       } else {
         estimation.editedImages.push(req.body._parts[0][1].editedImages);
+        if (
+          estimation.requestData !==
+          req.body._parts[0][1].requestData.requestData
+        ) {
+          estimation.requestData =
+            req.body._parts[0][1].requestData.requestData;
+        }
 
         estimation.save(function(err) {
           if (err) {
@@ -89,4 +96,3 @@ estimationController.showLast = (req, res) => {
 };
 
 module.exports = estimationController;
-

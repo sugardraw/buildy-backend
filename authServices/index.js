@@ -99,10 +99,6 @@ function loginValidation(req, res) {
           );
         } else {
           try {
-
-
-
-
             Professional.find(
               { email: req.body.email },
               (err, registeredProfessionals) => {

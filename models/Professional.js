@@ -37,6 +37,13 @@ const professionalSchema = new mongoose.Schema({
   city: {
     type: String
   },
+  location: {
+    type: { type: String },
+    coordinates: {
+      type: [Number],
+      index: "2dsphere"
+    }
+  },
 
   avatar: {},
   projectImages: [{}],
@@ -46,6 +53,8 @@ const professionalSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
+professionalSchema.index({ location: "2dsphere" });
 
 module.exports = Professional = mongoose.model(
   "Professional",

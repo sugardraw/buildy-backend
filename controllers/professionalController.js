@@ -35,6 +35,23 @@ professionalController.listAll = (req, res) => {
   });
 };
 
+professionalController.searchNearest = (req, res) => {
+  Professional.find({
+    location:
+    {
+      $near:
+      {
+        $geometry: { type: "Point", coordinates: [52.520008, 13.404954] },
+
+        $maxDistance: req.query.distance
+      }
+    }
+  }, (err, professionalList) => {
+    res.send(professionalList);
+  });
+}
+
+
 professionalController.showDetails = (req, res) => {
   console.log(req.query.id);
   Professional.find({ _id: req.query.id }, (err, professional) => {
