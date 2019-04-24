@@ -67,7 +67,11 @@ router.post(
   professionalController.saveNewProfessional
 );
 
-router.post("/api/user/save", userController.saveNewUser);
+router.post(
+  "/api/user/save",
+  imageUpload.single("avatar"),
+  userController.saveNewUser
+);
 
 router.post(
   "/api/user/request/save",
@@ -84,17 +88,12 @@ router.post(
 //get all
 
 router.get("/api/user/listAll", userController.listAll);
-router.get("/api/professional/listAll", professionalController.listAll);
-
 router.get("/api/user/showDetails", userController.showDetails);
-router.get("/api/user/request/showLast", estimationController.showLast);
+
+router.get("/api/professional/listAll", professionalController.listAll);
 router.get("/api/professional/showDetails", professionalController.showDetails);
 
-
-
-router.get("/api/professional/search_nearest", professionalController.searchNearest)
-
-
+router.get("/api/user/request/showLast", estimationController.showLast);
 
 //upload an avatar image
 router.post(
