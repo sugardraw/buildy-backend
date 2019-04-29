@@ -77,11 +77,7 @@ router.post(
   estimationController.saveNewEstimation
 );
 
-router.post(
-  "/api/user/update",
-  imageUpload.single("avatar"),
-  userController.updateUser
-);
+router.post("/api/user/update", userController.updateUser);
 
 //get all
 

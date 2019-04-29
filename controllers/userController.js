@@ -50,10 +50,7 @@ userController.showDetails = (req, res) => {
 userController.saveNewUser = (req, res) => {
   console.log(req.body, req.file);
 
-  if (
-    req.body.email !== "" ||
-    req.body.email !== undefined
-  ) {
+  if (req.body.email !== "" || req.body.email !== undefined) {
     User.find({ email: req.body.email }, (err, registeredUsers) => {
       if (err) {
         return res.send("Registration failed. Server error");
@@ -82,7 +79,6 @@ userController.saveNewUser = (req, res) => {
                   .status(500)
                   .send({ message: `Error creating user: ${error}` });
               } else {
-          
                 const sessionObj = {
                   token: token,
                   userId: user._id
@@ -118,13 +114,38 @@ userController.saveNewUser = (req, res) => {
 };
 
 userController.updateUser = (req, res) => {
-  console.log("req.query, req.body", req.query, req.body);
+  console.log("req.query", req.query, req.body, req.file, req.params);
 
-  User.update({ _id: req.query.id }, { $set: req.body });
-  res.send({
-    msg: "updated"
-  });
+  const newUser = {
+    avatar: req.body.avatar,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    city: req.body.city,
+    street: req.body.street,
+    zip: req.body.zip
+  };
+
+  User.findOneAndUpdate(
+    { _id: req.query.id },
+    { $set: newUser },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        res.send({ status: false, msg: "Something wrong when updating data!" });
+        console.log("Something wrong when updating data!");
+      } else {
+        console.log(updatedUser);
+        res.send({
+          status: true,
+          msg: "user information was updated",
+          data: updatedUser
+        });
+      }
+    }
+  );
 };
+
 userController.saveAvatar = (req, res) => {
   console.log("userController.saveAvatar", req.body, req.body._parts);
   return res.send({
